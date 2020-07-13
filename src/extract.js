@@ -64,10 +64,8 @@ async function fetchHTML(page) {
 
 const days = getDays(daysback);
 
-const screenshotColleges = async (days, parallel) => {
+const savepage = async (days, parallel) => {
   const parallelBatches = Math.ceil(days.length / parallel)
-  // console.log('\nI have gotten the task of taking screenshots of ' + days.length + ' Wikipedia articles on colleges in Cologne and will take ' + parallel + ' of them in paralell.')
-  // console.log(' This will result in ' + parallelBatches + ' batches.')
 
   let k = 0;
   for (let i = 0; i < days.length; i += parallel) {
@@ -133,4 +131,4 @@ const screenshotColleges = async (days, parallel) => {
   }
 }
 
-screenshotColleges(days, parallel);
+savepage(days, parallel);
