@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef
+} from 'react';
+
 
 import logo from './logo.svg';
 import axios from 'axios'
 import cheerio from 'cheerio'; 
 import './App.css';
+// import d3 from 'd3.js'
 
 const url = `https://cors-anywhere.herokuapp.com/https://www.baanpolballs.com/pb/before.php`
 
@@ -29,9 +35,24 @@ const url = `https://cors-anywhere.herokuapp.com/https://www.baanpolballs.com/pb
 // <App data="1" title="Phone"></App>
 // <App data="2" title="Sai"></App>
 
-function App(prop) {
-  const data = prop.data;
-  const title = prop.title;
+
+function InnerHTML(props) {
+  const { html } = props
+  const divRef = useRef(null)
+
+  useEffect(() => {
+    const parsedHTML = document.createRange().createContextualFragment(html)
+    divRef.current.appendChild(parsedHTML)
+  }, [])
+
+  return (
+    <div ref={divRef}></div>
+  )
+}
+
+
+
+function App() {
 
 async function fetchHTML(theUrl){
   // return '<h2>Hello Rapee</h2>'
@@ -75,7 +96,7 @@ async function fetchHTML(theUrl){
     // })
   }
 
-  const [htmlContent, setHtmlContent] = useState('');
+  // const [htmlContent, setHtmlContent] = useState('');
 
   // htmlContent = 'hello'; // don't do this
   // setHtmlContent('hello');
@@ -88,13 +109,16 @@ async function fetchHTML(theUrl){
   // },)
   // });
 
-  // const content = html(url);
+
   const table = fetchHTML(url);
-  // let table = content.getElementById("soccer-table")[0]
+  // ReactDOM.render( `< p > ${table} < /p>`, document.getElementById('root'));
+
   // console.log(table);
-  // setHtmlContent(content);
- 
+  // setHtmlContent(table);
   // console.log(html)
+
+
+  const html = table.toString();
 
 
   return (
@@ -104,6 +128,7 @@ async function fetchHTML(theUrl){
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <InnerHTML html={html} />
         <a
           className="App-link"
           href="https://reactjs.org"
@@ -112,7 +137,8 @@ async function fetchHTML(theUrl){
         >
           Learn Reactt
         </a>
-        <pre>{ htmlContent }</pre>
+        {/* <pre>{ table }</pre> */}
+        {/* <div id="figure" style="margin-bottom: 50px;"></div> */}
       </header>
     </div>
   );

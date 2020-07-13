@@ -5,6 +5,8 @@ This project is try to
 
 ## Available Scripts
 
+### `npm install` for initial
+
 ### `node src/extract.js` for web crawling to output at `src/raw_table` directory
 
 In the project directory, you can run:
